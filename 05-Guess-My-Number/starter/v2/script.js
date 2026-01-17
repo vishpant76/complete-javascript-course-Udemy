@@ -42,17 +42,10 @@ function updateStylesOnGameReset() {
   ui.number.style.width = '15rem';
 }
 
-/* function updateHighScore(currentScore) {
+function updateHighScore(currentScore) {
   const currentHighScore = gameState.highScore;
   gameState.highScore = Math.max(gameState.highScore, currentScore);
   if (gameState.highScore > currentHighScore) {
-    ui.highScore.textContent = gameState.highScore;
-  }
-} */
-function updateHighScore() {
-  const prevHighScore = gameState.highScore;
-  gameState.highScore = Math.max(gameState.highScore, gameState.score);
-  if (gameState.highScore > prevHighScore) {
     ui.highScore.textContent = gameState.highScore;
   }
 }
@@ -62,7 +55,6 @@ function toggleCheckButton() {
 }
 
 function gameLogic(guessVal) {
-  if (gameState.isGameOver) return;
   const secretNum = gameState.secretNumber;
   if (!guessVal) {
     setMessage('Not a Number!');
@@ -70,10 +62,10 @@ function gameLogic(guessVal) {
     ui.number.textContent = secretNum;
     setMessage('You got it right!');
     updateStylesOnCorrectAns();
-    updateHighScore();
+    updateHighScore(gameState.score);
     gameState.isGameOver = true;
     toggleCheckButton();
-  } else {
+  } else if (guessVal !== secretNum) {
     gameState.score -= 1;
     if (gameState.score === 0) {
       gameState.isGameOver = true;
@@ -96,17 +88,15 @@ function startGame() {
 }
 
 function resetGame() {
-  // State changes first, UI reflects state after that.
-  gameState.score = 20;
-  gameState.isGameOver = false;
-  gameState.secretNumber = getRandomNumber();
-
-  ui.score.textContent = gameState.score;
+  ui.score.textContent = 20;
   ui.guess.value = '';
   ui.number.textContent = '?';
   setMessage('Start guessing...');
   updateStylesOnGameReset();
+  gameState.score = 20;
+  gameState.isGameOver = false;
   toggleCheckButton();
+  gameState.secretNumber = getRandomNumber();
 }
 ui.checkBtn.addEventListener('click', startGame);
 ui.againBtn.addEventListener('click', resetGame);
