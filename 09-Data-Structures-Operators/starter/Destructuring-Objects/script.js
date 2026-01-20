@@ -48,4 +48,60 @@ const restaurant = {
       close: 24,
     },
   },
+
+  // orderDelivery: function (obj) {
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '21:00',
+    address,
+  }) {
+    // console.log(obj);
+    console.log(
+      `Order Received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`,
+    );
+  },
 };
+
+restaurant.orderDelivery({
+  time: '22:30',
+  address: 'Phase-3, Mukhani',
+  mainIndex: 2,
+  starterIndex: 2,
+});
+
+restaurant.orderDelivery({
+  address: 'Phase-3, Nilanchal Colony, Haldwani',
+  starterIndex: 3,
+});
+
+const { name, openingHours, categories } = restaurant;
+// console.log(name, openingHours, categories);
+
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+
+// console.log(restaurantName, openingHours, tags);
+
+const { menu = [], starterMenu: starters = [] } = restaurant;
+// console.log(menu, starters);
+
+// Mutating variables
+let a = 111;
+let b = 999;
+// console.log(a, b);
+const obj = { a: 23, b: 7, c: 14 };
+
+({ a, b } = obj);
+// console.log(a, b);
+
+// Nested Objects
+const {
+  fri: { open: op, close: cl },
+} = openingHours;
+// console.log(fri);
+// console.log(open, close);
+// console.log(op, cl);
